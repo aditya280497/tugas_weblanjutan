@@ -14,7 +14,7 @@ class Mahasiswacontroller extends Controller
      */
     public function index()
     {
-        return view("Layouts.app");
+        return view("mahasiswa.index");
     }
 
     /**

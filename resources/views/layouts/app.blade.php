@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="{{ asset('js/app.js')}}"></script>
-    <link rel="stylesheet" href="{{ asset('js/app.js')}}">>
+    <title>@yield('title')</title>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 </head>
 <body>
     @include('layouts.navbar');
-    <h1>Dasboard website mahasiswa</h1>   
+    <div class ="controller">
+
+        <div class="row">
+        <div class="col-md-2">
+        @include('layouts.sadbar');
+        </div>
+        <div class="col-md-10">
+            @yield('content')
+        </div>
+
 </body>
 </html>
