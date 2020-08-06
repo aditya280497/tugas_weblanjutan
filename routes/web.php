@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('mhs','mahasiswacontroller@index');
+Route::get('/mhs_daftar','mahasiswacontroller@mhs_daftar');
