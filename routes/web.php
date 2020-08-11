@@ -17,5 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('mhs','mahasiswacontroller@index');
-Route::get('/mhs_daftar','mahasiswacontroller@mhs_daftar');
+Route::get('/mhs','mahasiswacontroller@index')->name('mhs.index');
+Route::get('/mhs/daftar','mahasiswacontroller@mhs_daftar')->name('mhs.daftar');
