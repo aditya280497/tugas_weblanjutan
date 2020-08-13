@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mahasiswa;
+use app\Fakultas;
 use DataTables;
-use App\User;
 use Illuminate\Http\Request;
 
 
@@ -23,7 +23,17 @@ class Mahasiswacontroller extends Controller
 
     public function mhs_daftar()
     {
-        return DataTables::of(Mahasiswa::all())->make(true);
+        $mhs = mahasiswa::with('mfakultas')->get();
+        return DataTables::of($mhs)
+        ->addIndexColumn()
+        ->addcolumn('action', function ($mhs){
+            $action = '<a class="text-primary"
+    href="/mhs/edit/'.$mhs->nim.'">Edit</a>';
+            $action .= ' | <a class="text-danger"
+    href="/mhs/delete/'.$mhs->nim.'">Hapust</a>';
+            return $action;
+        })
+        ->make();
     }    
 
     /**
@@ -33,7 +43,8 @@ class Mahasiswacontroller extends Controller
      */
     public function create()
     {
-        //
+        $fakultas = fakultas::all();
+        return view('mahasiswa.create', compact('fakultas'));
     }
 
     /**
@@ -44,7 +55,14 @@ class Mahasiswacontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nim' => 'required|digits:10',
+            'nama_lengkap' => 'required',
+        ]);
+
+        mahasiswa::create($request->all());
+        return redirect()->route('mhs.index')
+                        ->with('succes','Data Berhasi Ditambahkan');
     }
 
     /**
@@ -64,9 +82,11 @@ class Mahasiswacontroller extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mahasiswa $mahasiswa)
+    public function edit(Mahasiswa $mahasiswa, $id)
     {
-        //
+        $fakultas = fakultas::all();
+        #mhs = mahasiswa::find($id);
+        return view ('mahasiswa.edit', compact('fakultas', 'mhs'));
     }
 
     /**
@@ -78,7 +98,12 @@ class Mahasiswacontroller extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        //
+        $request->valdate ([
+            'nama_lengkap' => 'required',
+        ]);
+        $mahasiswa->update($request->all());
+        return redirect()->route ('mhs.index')
+                        -> with('success', 'Data Berhasil Diupdate');
     }
 
     /**
@@ -89,6 +114,8 @@ class Mahasiswacontroller extends Controller
      */
     public function destroy(Mahasiswa $mahasiswa)
     {
-        //
+        $Mahasiswa->delete();
+        return redirect()->route('mhs.index')
+                        -> with('success', 'Data Berhasil Dihapus');
     }
 }

@@ -18,4 +18,11 @@ Route::get('/', function () {
 });
 
 Route::get('/mhs','mahasiswacontroller@index')->name('mhs.index');
-Route::get('/mhs/daftar','mahasiswacontroller@mhs_daftar')->name('mhs.daftar');
+Route::get('/mhs_daftar','mahasiswacontroller@mhs_daftar')->name('mhs.daftar');
+Route::get('/mhs/create','mahasiswacontroller@create');
+Route::get('/mhs/store','mahasiswacontroller@store');
+Route::get('/mhs/edit{nim}','mahasiswacontroller@edit');
+Route::get('/mhs/update/{mahasiwa:nim}','mahasiswacontroller@update')->name('mhs.update');
+Route::get('/mhs/delete/{mahasiwa:nim}','mahasiswacontroller@destroy')->name('mhs.delete');
+
+Route::Resource('/prodi', 'ProdiController');
